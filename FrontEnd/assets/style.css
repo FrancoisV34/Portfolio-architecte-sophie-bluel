@@ -187,6 +187,14 @@ nav li {
 	font-size: 1.2em;
 }
 
+nav li button {
+	border: none;
+	background-color: white;
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 16.8px;
+}
+
 li:hover {
 	color: #B1663C;
 }
@@ -281,6 +289,10 @@ nav li img {
 .gallery img {
 	width: 100%;
 
+}
+
+.h2-login-page {
+	text-align: center;
 }
 
 #contact {

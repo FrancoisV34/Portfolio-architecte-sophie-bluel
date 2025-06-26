@@ -141,4 +141,18 @@ getWorks().then(data => {
 
 })
 
-console.log("caca")
+const logBtn = document.querySelector(".login")
+logBtn.addEventListener("click", function () {
+    const main = document.querySelector("main");
+    main.innerHTML = "";
+
+    //Création titre Log In h2 dans page login
+    const pageLogLogin = document.createElement("h2");
+    pageLogLogin.classList.add("h2-login-page")
+    pageLogLogin.innerText = "Log In";
+    main.appendChild(pageLogLogin)
+
+    // ok pour ce soir -> reste à faire sur le meme etat d'esprit le reste de la page Log In 
+
+
+})
