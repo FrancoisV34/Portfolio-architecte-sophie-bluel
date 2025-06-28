@@ -154,7 +154,7 @@ logBtn.addEventListener("click", function () {
 
     // Création du form
     const formLogin = document.createElement("form")
-    formLogin.classList.add("login")
+    formLogin.id = "login-form"
 
     //Création label et input email.
     const labelEmail = document.createElement("label")
@@ -180,6 +180,7 @@ logBtn.addEventListener("click", function () {
     const connectBtn = document.createElement("button")
     connectBtn.innerText = "Se connecter"
     connectBtn.setAttribute("id", "connect-btn")
+    connectBtn.setAttribute("type", "submit")
 
     // Create "Mot de passe oublié"
     const forgetPassword = document.createElement("p")
@@ -197,7 +198,45 @@ logBtn.addEventListener("click", function () {
     formLogin.appendChild(connectBtn)
     formLogin.appendChild(forgetPassword)
 
+    getUsers()
+
     //CSS du Form et rajouter lien "mdp oublié"
 })
+
+async function getUsers() {
+    // viser le "form" pour capter meme un appui sur la touche entrée
+    const formSubmit = document.querySelector("#login-form")
+    console.log("form ready")
+
+    //add click submit function
+    formSubmit.addEventListener("submit", async function (event) {
+        event.preventDefault()
+        console.log("form submitted")
+        // get elem email(id email-login) and password(id password)
+        const getInputEmail = document.getElementById("email-login")
+        const inputEmail = getInputEmail.value;
+
+        const getInputPassword = document.getElementById("password")
+        const inputPassword = getInputPassword.value;
+
+        console.log("Email :", inputEmail, "password :", inputPassword)
+        try {
+            //post user email and password auth ? 
+            const userResponse = await fetch("http://localhost:5678/api/users/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: inputEmail,
+                    password: inputPassword,
+                })
+            });
+            const dataUsers = await userResponse.json();
+            console.log("API response :", dataUsers)
+        } catch (error) {
+            console.log("error during request", error)
+        }
+
+    })
+}
 
 
