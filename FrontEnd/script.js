@@ -152,7 +152,52 @@ logBtn.addEventListener("click", function () {
     pageLogLogin.innerText = "Log In";
     main.appendChild(pageLogLogin)
 
-    // ok pour ce soir -> reste à faire sur le meme etat d'esprit le reste de la page Log In 
+    // Création du form
+    const formLogin = document.createElement("form")
+    formLogin.classList.add("login")
 
+    //Création label et input email.
+    const labelEmail = document.createElement("label")
+    labelEmail.setAttribute("for", "email");
+    labelEmail.classList.add("labelemail")
+    labelEmail.innerText = "E-mail"
 
+    const inputEmail = document.createElement("input")
+    inputEmail.setAttribute("id", "email-login")
+    inputEmail.setAttribute("type", "email")
+
+    // création label + input mdp.
+    const labelPassword = document.createElement("label")
+    labelPassword.setAttribute("for", "password")
+    labelPassword.classList.add("labelpassword")
+    labelPassword.innerText = "Mot de passe"
+
+    const inputPassword = document.createElement("input")
+    inputPassword.setAttribute("type", "password")
+    inputPassword.setAttribute("id", "password")
+
+    //Create button "se connecter"
+    const connectBtn = document.createElement("button")
+    connectBtn.innerText = "Se connecter"
+    connectBtn.setAttribute("id", "connect-btn")
+
+    // Create "Mot de passe oublié"
+    const forgetPassword = document.createElement("p")
+    forgetPassword.innerText = "Mot de passe oublié"
+    forgetPassword.classList.add("forget-user-password")
+
+    // Intégration des éléments créés ci dessus (label et input pour la page login)
+    main.appendChild(formLogin)
+
+    formLogin.appendChild(labelEmail)
+    formLogin.appendChild(inputEmail)
+
+    formLogin.appendChild(labelPassword)
+    formLogin.appendChild(inputPassword)
+    formLogin.appendChild(connectBtn)
+    formLogin.appendChild(forgetPassword)
+
+    //CSS du Form et rajouter lien "mdp oublié"
 })
+
+
