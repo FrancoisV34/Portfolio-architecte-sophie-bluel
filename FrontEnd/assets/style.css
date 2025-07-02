@@ -375,9 +375,38 @@ nav li img {
 
 
 /* end layout form for now -> finish button submit + forgot password */
+/* start error auth here */
+
+#error-message {
+	color: #801111;
+	font-size: 18px;
+	text-align: center;
+	margin-top: -325px;
+	font-weight: 700;
+	margin-bottom: 325px;
+}
+
+/* end error auth message
 
 
 /* end page login */
+
+/* welcome page when auth ok */
+
+.portfolio-title {
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	align-items: baseline;
+}
+
+.portfolio-title p {
+	display: flex;
+	flex-direction: row-reverse;
+	gap: 10px;
+	padding: 1px 0 1px 0;
+	align-items: baseline;
+}
 
 #contact {
 	width: 50%;

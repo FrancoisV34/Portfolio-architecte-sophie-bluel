@@ -1,7 +1,7 @@
 async function getWorks() {
     const response = await fetch("http://localhost:5678/api/works")
-    const data = await response.json();
-    return data;
+    const data = await response.json()
+    return data
 }
 
 getWorks().then(data => {
@@ -25,7 +25,6 @@ getWorks().then(data => {
         }
     }
 })
-
 getWorks().then(data => {
     if (data.length > 0) {
         const divFiltres = document.querySelector(".filtres");
@@ -138,6 +137,44 @@ getWorks().then(data => {
         divFiltres.appendChild(hrBtn);
 
     }
+    //get the token 
+    const token = localStorage.getItem("token")
+    // use if -> when token ok -> change button login into logout
+    if (token) {
+        const logoutBtn = document.querySelector(".login")
+        logoutBtn.innerText = "logout"
+        console.log(token)
+
+        // hide buttons when login
+        const filtres = document.querySelector(".filtres")
+        filtres.innerHTML = ""
+
+        // create p and img (icon) 
+        const modify = document.createElement("p")
+        modify.innerText = "Modifier"
+
+        const modifyIcon = document.createElement("img")
+        modifyIcon.setAttribute("alt", "icone modifier")
+        modifyIcon.setAttribute("id", "modify-icon")
+        modifyIcon.setAttribute("src", "/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/Group.png")
+
+        //target section#portfolio 
+        const portfolio = document.querySelector(".portfolio-title")
+
+
+        //appear icon into p
+
+        modify.appendChild(modifyIcon)
+
+        portfolio.appendChild(modify)
+
+
+        //now if click on the button -> remove token and reload page
+        logoutBtn.addEventListener("click", function () {
+            localStorage.removeItem("token")
+            window.location.reload()
+        })
+    }
 
 })
 
@@ -199,8 +236,6 @@ logBtn.addEventListener("click", function () {
     formLogin.appendChild(forgetPassword)
 
     getUsers()
-
-    //CSS du Form et rajouter lien "mdp oublié"
 })
 
 async function getUsers() {
@@ -230,12 +265,44 @@ async function getUsers() {
                     password: inputPassword,
                 })
             });
+
+            if (!userResponse.ok) {
+                const errorInterface = document.getElementById("login-form")
+
+                //recup errorInterface (the form in login page)
+                const errorAppeared = document.getElementById("error-message");
+
+                //create if to let appear just 1 errorMessage
+                if (errorAppeared === null) {
+
+                    //create error message
+                    const errorMessage = document.createElement("p")
+
+                    // errorMessage.id = errorMessage.setAttribute("id", "error-message") did for training
+                    errorMessage.id = "error-message";
+                    errorMessage.innerText = "Identifiant ou mot de passe incorrect"
+
+                    // made the message appear in errorInterface
+                    errorInterface.appendChild(errorMessage);
+                }
+
+                return;
+            }
+            // get the data of user bc auth ok
             const dataUsers = await userResponse.json();
-            console.log("API response :", dataUsers)
+            const token = dataUsers.token;
+            localStorage.setItem("token", dataUsers.token)
+
+            // we want to go back to the "accueil" page
+            window.location.href = "http://127.0.0.1:5500/Portfolio-architecte-sophie-bluel_fv/FrontEnd/index.html"
+
+            //and need change login button into logout button
+
+
+
         } catch (error) {
             console.log("error during request", error)
         }
-
     })
 }
 
