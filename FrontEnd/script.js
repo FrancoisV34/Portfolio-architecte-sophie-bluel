@@ -8,6 +8,7 @@ getWorks().then(data => {
     if (data.length > 0) {
         const sectionWork = document.querySelector(".gallery")
 
+
         for (let i = 0; i < data.length; i++) {
 
             const imgWork = document.createElement("img");
@@ -34,7 +35,17 @@ getWorks().then(data => {
         const tousBtn = document.createElement("button")
         tousBtn.id = "Tous";
         tousBtn.innerText = "Tous";
+        tousBtn.classList.add("filter-btn")
         tousBtn.addEventListener("click", function () {
+            const buttons = document.querySelectorAll(".filter-btn")
+
+            buttons.forEach(button => {
+                if (button === this) {
+                    button.classList.add("selected")
+                } else {
+                    button.classList.remove("selected")
+                }
+            })
             const sectionWork = document.querySelector(".gallery")
             sectionWork.innerHTML = "";
 
@@ -59,7 +70,17 @@ getWorks().then(data => {
         const objetsBtn = document.createElement("button")
         objetsBtn.id = "Objets";
         objetsBtn.innerText = "Objets";
+        objetsBtn.classList.add("filter-btn")
         objetsBtn.addEventListener("click", function () {
+            const buttons = document.querySelectorAll(".filter-btn")
+
+            buttons.forEach(button => {
+                if (button === this) {
+                    button.classList.add("selected")
+                } else {
+                    button.classList.remove("selected")
+                }
+            })
             const objWorks = data.filter(data => data.categoryId === 1)
             const sectionWork = document.querySelector(".gallery")
             sectionWork.innerHTML = "";
@@ -84,7 +105,18 @@ getWorks().then(data => {
         const appartBtn = document.createElement("button")
         appartBtn.id = "Appartements";
         appartBtn.innerText = "Appartements";
+        appartBtn.classList.add("filter-btn")
         appartBtn.addEventListener("click", function () {
+            const buttons = document.querySelectorAll(".filter-btn")
+
+            buttons.forEach(button => {
+                if (button === this) {
+                    button.classList.add("selected")
+                } else {
+                    button.classList.remove("selected")
+                }
+            })
+
             const appartWorks = data.filter(data => data.categoryId === 2)
             const sectionWork = document.querySelector(".gallery")
             sectionWork.innerHTML = ""
@@ -110,7 +142,18 @@ getWorks().then(data => {
         const hrBtn = document.createElement("button")
         hrBtn.id = "Hotels&Restaurants";
         hrBtn.innerText = "Hôtels & Restaurants";
+        hrBtn.classList.add("filter-btn")
         hrBtn.addEventListener("click", function () {
+            const buttons = document.querySelectorAll(".filter-btn")
+
+            buttons.forEach(button => {
+                if (button === this) {
+                    button.classList.add("selected")
+                } else {
+                    button.classList.remove("selected")
+                }
+            })
+
             const hrWorks = data.filter(data => data.categoryId === 3)
             const sectionWork = document.querySelector(".gallery")
             sectionWork.innerHTML = ""
@@ -150,7 +193,8 @@ getWorks().then(data => {
         filtres.innerHTML = ""
 
         // create p and img (icon) 
-        const modify = document.createElement("p")
+        const modify = document.createElement("button")
+        modify.setAttribute("id", "modify-button")
         modify.innerText = "Modifier"
 
         const modifyIcon = document.createElement("img")
@@ -173,6 +217,23 @@ getWorks().then(data => {
         logoutBtn.addEventListener("click", function () {
             localStorage.removeItem("token")
             window.location.reload()
+        })
+
+        modify.addEventListener("click", function () {
+            getWorks().then(data => {
+                if (data.length > 0) {
+                    const modaleWorks = document.querySelector(".modale-works")
+
+                    for (let i = 0; i < data.length; i++) {
+
+                        const imgWork = document.createElement("img");
+                        imgWork.src = data[i].imageUrl
+
+                        modaleWorks.appendChild(imgWork);
+                    }
+                }
+            })
+
         })
     }
 

@@ -254,6 +254,11 @@ nav li img {
 	background-color: transparent;
 }
 
+#portfolio .selected {
+	background-color: #1D6154;
+	color: #FFF;
+}
+
 #Tous {
 	width: 100px;
 }
@@ -400,12 +405,23 @@ nav li img {
 	align-items: baseline;
 }
 
-.portfolio-title p {
+.portfolio-title #modify-button {
 	display: flex;
 	flex-direction: row-reverse;
 	gap: 10px;
 	padding: 1px 0 1px 0;
 	align-items: baseline;
+	border: none;
+	color: black;
+	font-weight: 400;
+	font-size: 14px;
+	font-family: 'Work Sans';
+}
+
+.portfolio-title #modify-button:hover {
+	background-color: inherit;
+	color: black;
+	font-family: 'Work Sans';
 }
 
 #contact {
@@ -460,4 +476,64 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+/* create modale */
+
+.modale {
+	width: 630px;
+	height: 688px;
+	display: flex;
+	flex-direction: column;
+	padding: 20px 20px 30px 20px;
+	border-radius: 10px;
+
+}
+
+.modale .xmark {
+	width: 24px;
+	height: 24px;
+	align-self: flex-end;
+	padding: 0;
+	border: none;
+	background-color: white;
+	margin-bottom: 10px;
+}
+
+.modale button img {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+}
+
+.modale .modale-title {
+	align-self: center;
+	font-size: 26px;
+	font-weight: 400;
+	margin-bottom: 45px;
+}
+
+.modale-works {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 28px 8px;
+}
+
+.modale-works img {
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+}
+
+.add-photo {
+	align-self: center;
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 16px;
+	height: 35px;
+	background-color: #1D6154;
+	color: #FFF;
+	width: 237px;
 }
