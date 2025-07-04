@@ -219,10 +219,20 @@ getWorks().then(data => {
             window.location.reload()
         })
 
+        //open modale
         modify.addEventListener("click", function () {
             getWorks().then(data => {
+                const modale = document.querySelector(".modale");
+
+
+                modale.style.visibility = "visible";
+                modale.removeAttribute("aria-hidden")
+                modale.setAttribute("aria-modal", "true");
+
+
                 if (data.length > 0) {
                     const modaleWorks = document.querySelector(".modale-works")
+                    modaleWorks.innerHTML = "";
 
                     for (let i = 0; i < data.length; i++) {
 
@@ -235,6 +245,29 @@ getWorks().then(data => {
             })
 
         })
+
+        //close modale with click outside the modale, on the xmark and with escape key
+        let modaleContent = document.querySelector(".modale-content")
+        const modale = document.querySelector(".modale");
+        const xmark = document.querySelector(".xmark")
+
+        const closeModale = function (event) {
+
+
+
+            if (!modaleContent.contains(event.target) || xmark.contains(event.target)) {
+                event.preventDefault();
+                document.activeElement.blur();
+
+                modale.style.visibility = "hidden";
+                modale.setAttribute("aria-hidden", "true")
+                modale.removeAttribute("aria-modal");
+            }
+        }
+        modale.addEventListener("click", closeModale);
+        xmark.addEventListener("click", closeModale);
+
+
     }
 
 })
@@ -367,4 +400,4 @@ async function getUsers() {
     })
 }
 
-
+// make modal appear

@@ -481,13 +481,28 @@ footer nav ul {
 /* create modale */
 
 .modale {
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	position: fixed;
+	background: rgba(0, 0, 0, 0.3);
+	z-index: 9999;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+.modale-content {
+	overflow: auto;
 	width: 630px;
 	height: 688px;
 	display: flex;
 	flex-direction: column;
 	padding: 20px 20px 30px 20px;
 	border-radius: 10px;
-
+	background-color: #FFF;
 }
 
 .modale .xmark {
@@ -517,6 +532,9 @@ footer nav ul {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 28px 8px;
+	border-bottom: 1px solid #B3B3B3;
+	margin-bottom: 37px;
+	padding: 0 60px 94px 60px;
 }
 
 .modale-works img {
@@ -529,11 +547,16 @@ footer nav ul {
 	align-self: center;
 	border-radius: 60px;
 	border: 1px solid #1D6154;
-	font-family: 'Syne';
-	font-weight: 700;
-	font-size: 16px;
 	height: 35px;
 	background-color: #1D6154;
 	color: #FFF;
 	width: 237px;
+	padding: 11px 0 11px 0;
+}
+
+.add-photo .span {
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 16px;
+
 }
