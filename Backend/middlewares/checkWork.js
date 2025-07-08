@@ -12,8 +12,8 @@ module.exports = (req, res, next) => {
 			categoryId > 0 &&
 			userId !== undefined &&
 			userId > 0 &&
-			imageUrl !== undefined){
-			req.work = {title, categoryId, userId, imageUrl}
+			imageUrl !== undefined) {
+			req.work = { title, categoryId, userId, imageUrl }
 			next()
 		}else{
 			return res.status(400).json({error: new Error("Bad Request")})
