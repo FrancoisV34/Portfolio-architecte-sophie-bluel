@@ -500,7 +500,7 @@ footer nav ul {
 	height: 688px;
 	display: flex;
 	flex-direction: column;
-	padding: 20px 20px 30px 20px;
+	padding: 20px 20px 50px 20px;
 	border-radius: 10px;
 	background-color: #FFF;
 }
@@ -552,6 +552,7 @@ footer nav ul {
 	color: #FFF;
 	width: 237px;
 	padding: 11px 0 11px 0;
+	margin-bottom: 30px;
 }
 
 .add-photo .span {
@@ -559,4 +560,78 @@ footer nav ul {
 	font-weight: 700;
 	font-size: 16px;
 
+}
+
+/* modal 2 (upload file) hidden by default */
+
+.upload {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #E8F1F6;
+	border-radius: 3px;
+	padding: 20px;
+	visibility: hidden;
+	width: 420px;
+	height: 169px;
+	position: fixed;
+}
+
+.upload-form {
+	display: flex;
+	flex-direction: column;
+	background-color: #E8F1F6;
+	border-radius: 3px;
+	padding: 30px 20px 20px 20px;
+	visibility: hidden;
+	width: 420px;
+	height: 169px;
+	position: fixed;
+	background-color: white;
+
+}
+
+.upload-form .upload-form-title {
+	font-weight: 500;
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+
+.upload-form #title {
+	height: 100px;
+	border: none;
+	box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.09);
+	margin-bottom: 21px;
+	font-size: large;
+}
+
+.upload-form select {
+	height: 100px;
+	border: none;
+	box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.09);
+	margin-bottom: 21px;
+}
+
+
+
+.upload img {
+	width: 76px;
+	height: 76px;
+}
+
+.upload label {
+	background-color: #CBD6DC;
+	border-radius: 50px;
+	padding: 10px 20px;
+	margin: 10px 0 5px 0;
+	font-weight: 500;
+	font-size: 14px;
+	color: #306685;
+}
+
+.upload .upload-details {
+	font-weight: 400;
+	font-size: 10px;
+	color: #444444;
 }

@@ -8,7 +8,6 @@ getWorks().then(data => {
     if (data.length > 0) {
         const sectionWork = document.querySelector(".gallery")
 
-
         for (let i = 0; i < data.length; i++) {
 
             const imgWork = document.createElement("img");
@@ -25,8 +24,8 @@ getWorks().then(data => {
             sectionWork.appendChild(globalFig);
         }
     }
-})
-getWorks().then(data => {
+    return data;
+}).then(data => {
     if (data.length > 0) {
         const divFiltres = document.querySelector(".filtres");
 
@@ -186,7 +185,6 @@ getWorks().then(data => {
     if (token) {
         const logoutBtn = document.querySelector(".login")
         logoutBtn.innerText = "logout"
-        console.log(token)
 
         // hide buttons when login
         const filtres = document.querySelector(".filtres")
@@ -246,30 +244,64 @@ getWorks().then(data => {
 
         })
 
+        //make a function and call function if click on the button ...
+
+        const addPhotoBtn = document.querySelector(".add-photo")
+        addPhotoBtn.addEventListener("click", function () {
+            //change title
+            const addPhotoModale = document.querySelector(".modale-title");
+            addPhotoModale.innerText = "Ajout photo";
+
+            //change content under title
+            const formAddPhotoModale = document.querySelector(".modale-works");
+            formAddPhotoModale.innerHTML = ""
+            formAddPhotoModale.style.display = "flex"
+            formAddPhotoModale.style.justifyContent = "center";
+            formAddPhotoModale.style.flexDirection = "column";
+            formAddPhotoModale.style.gap = "0";
+
+            // get back the styled div i create for the "input file" to upload new work
+            const uploadFile = document.querySelector(".upload")
+            uploadFile.style.visibility = "visible";
+            uploadFile.style.position = "unset";
+            uploadFile.style.alignSelf = "center";
+
+            const formUploadFile = document.querySelector(".upload-form")
+            formUploadFile.style.visibility = "visible";
+            formUploadFile.style.position = "unset";
+
+            formAddPhotoModale.appendChild(uploadFile)
+            formAddPhotoModale.appendChild(formUploadFile)
+        })
+
         //close modale with click outside the modale, on the xmark and with escape key
         let modaleContent = document.querySelector(".modale-content")
         const modale = document.querySelector(".modale");
         const xmark = document.querySelector(".xmark")
 
         const closeModale = function (event) {
-
-
-
             if (!modaleContent.contains(event.target) || xmark.contains(event.target)) {
                 event.preventDefault();
                 document.activeElement.blur();
 
                 modale.style.visibility = "hidden";
-                modale.setAttribute("aria-hidden", "true")
+                modale.setAttribute("aria-hidden", "true");
                 modale.removeAttribute("aria-modal");
+                const formUploadFile = document.querySelector(".upload-form");
+                formUploadFile.style.visibility = "hidden";
+
+                const uploadFile = document.querySelector(".upload");
+                uploadFile.style.visibility = "hidden";
             }
         }
         modale.addEventListener("click", closeModale);
         xmark.addEventListener("click", closeModale);
-
-
+        window.addEventListener("keydown", function (event) {
+            if (event.key === "Escape" || event.key === "Esc") {
+                closeModale(event);
+            }
+        })
     }
-
 })
 
 const logBtn = document.querySelector(".login")
@@ -335,12 +367,10 @@ logBtn.addEventListener("click", function () {
 async function getUsers() {
     // viser le "form" pour capter meme un appui sur la touche entrée
     const formSubmit = document.querySelector("#login-form")
-    console.log("form ready")
 
     //add click submit function
     formSubmit.addEventListener("submit", async function (event) {
         event.preventDefault()
-        console.log("form submitted")
         // get elem email(id email-login) and password(id password)
         const getInputEmail = document.getElementById("email-login")
         const inputEmail = getInputEmail.value;
@@ -348,7 +378,6 @@ async function getUsers() {
         const getInputPassword = document.getElementById("password")
         const inputPassword = getInputPassword.value;
 
-        console.log("Email :", inputEmail, "password :", inputPassword)
         try {
             //post user email and password auth ? 
             const userResponse = await fetch("http://localhost:5678/api/users/login", {
@@ -384,20 +413,12 @@ async function getUsers() {
             }
             // get the data of user bc auth ok
             const dataUsers = await userResponse.json();
-            const token = dataUsers.token;
-            localStorage.setItem("token", dataUsers.token)
+            localStorage.setItem("token", dataUsers.token);
 
             // we want to go back to the "accueil" page
             window.location.href = "http://127.0.0.1:5500/Portfolio-architecte-sophie-bluel_fv/FrontEnd/index.html"
 
-            //and need change login button into logout button
-
-
-
         } catch (error) {
-            console.log("error during request", error)
         }
     })
 }
-
-// make modal appear

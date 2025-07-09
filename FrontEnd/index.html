@@ -32,10 +32,29 @@
 
 		<div class="modale" id="modalepage" aria-hidden="true" role="dialog" aria-modal="false"
 			aria-labelledby="modale-title">
+
 			<div class="modale-content">
 				<button class="xmark"><img src="/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/xmark.png"
 						alt="croix pour fermer modale"></button>
 				<span class="modale-title">Galerie photo</span>
+				<div class="upload">
+					<img src="/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/Vector.png"
+						alt="logo upload file">
+					<label for="photoupload">+ Ajouter photo</label>
+					<input type="file" enctype="multipart/form-data" id="photoupload" hidden>
+					<span class="upload-details">jpg, png : 4 mo max</span>
+				</div>
+				<div class="upload-form">
+					<label for="title" class="upload-form-title">Titre</label>
+					<input type="text" id="title">
+					<label for="upload-category" class="upload-form-title">Catégorie</label>
+					<select id="upload-category" aria-placeholder="">
+						<option value="1">Objet</option>
+						<option value="2">Appartement</option>
+						<option value="3">Hôtels & Restaurants</option>
+					</select>
+				</div>
+
 				<div class="modale-works">
 
 				</div>
@@ -48,7 +67,8 @@
 			</figure>
 			<article>
 				<h2>Designer d'espace</h2>
-				<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison
+				<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la
+					livraison
 					finale du chantier.</p>
 				<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les
 					couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du
