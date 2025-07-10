@@ -222,6 +222,11 @@ getWorks().then(data => {
             getWorks().then(data => {
                 const modale = document.querySelector(".modale");
 
+                const modaleOne = document.querySelector(".modale1")
+                modaleOne.style.display = "flex";
+
+                const modaleTwo = document.querySelector(".modale2")
+                modaleTwo.style.display = "none";
 
                 modale.style.visibility = "visible";
                 modale.removeAttribute("aria-hidden")
@@ -248,30 +253,21 @@ getWorks().then(data => {
 
         const addPhotoBtn = document.querySelector(".add-photo")
         addPhotoBtn.addEventListener("click", function () {
-            //change title
-            const addPhotoModale = document.querySelector(".modale-title");
-            addPhotoModale.innerText = "Ajout photo";
+            // hide modale1
+            const modale1 = document.querySelector(".modale1")
+            modale1.style.display = "none";
 
-            //change content under title
-            const formAddPhotoModale = document.querySelector(".modale-works");
-            formAddPhotoModale.innerHTML = ""
-            formAddPhotoModale.style.display = "flex"
-            formAddPhotoModale.style.justifyContent = "center";
-            formAddPhotoModale.style.flexDirection = "column";
-            formAddPhotoModale.style.gap = "0";
+            //appear modale2
+            const modale2 = document.querySelector(".modale2")
+            modale2.style.visibility = "visible";
+            modale2.style.display = "flex"
 
-            // get back the styled div i create for the "input file" to upload new work
-            const uploadFile = document.querySelector(".upload")
-            uploadFile.style.visibility = "visible";
-            uploadFile.style.position = "unset";
-            uploadFile.style.alignSelf = "center";
+            const modaleContent = document.querySelector(".modale-content")
+            modaleContent.appendChild(modale2);
 
-            const formUploadFile = document.querySelector(".upload-form")
-            formUploadFile.style.visibility = "visible";
-            formUploadFile.style.position = "unset";
+            const backArrow = document.querySelector(".back")
+            backArrow.style.visibility = "visible";
 
-            formAddPhotoModale.appendChild(uploadFile)
-            formAddPhotoModale.appendChild(formUploadFile)
         })
 
         //close modale with click outside the modale, on the xmark and with escape key
@@ -287,13 +283,30 @@ getWorks().then(data => {
                 modale.style.visibility = "hidden";
                 modale.setAttribute("aria-hidden", "true");
                 modale.removeAttribute("aria-modal");
-                const formUploadFile = document.querySelector(".upload-form");
-                formUploadFile.style.visibility = "hidden";
 
-                const uploadFile = document.querySelector(".upload");
-                uploadFile.style.visibility = "hidden";
+                const modale2 = document.querySelector(".modale2")
+                modale2.style.visibility = "hidden";
+
+
+                backArrow.style.visibility = "hidden";
             }
         }
+        // back arrow function
+        const backArrow = document.querySelector(".back")
+        const backModaleOne = function (event) {
+            event.preventDefault();
+            document.activeElement.blur();
+
+            const modale1 = document.querySelector(".modale1")
+            modale1.style.display = "flex";
+
+            const modale2 = document.querySelector(".modale2")
+            modale2.style.display = "none";
+
+            modale2.style.visibility = "hidden";
+            backArrow.style.visibility = "hidden";
+        }
+        backArrow.addEventListener("click", backModaleOne)
         modale.addEventListener("click", closeModale);
         xmark.addEventListener("click", closeModale);
         window.addEventListener("keydown", function (event) {

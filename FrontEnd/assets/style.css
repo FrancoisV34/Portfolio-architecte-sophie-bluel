@@ -494,13 +494,19 @@ footer nav ul {
 	visibility: hidden;
 }
 
+.modale1 {
+	display: none;
+	flex-direction: column;
+	align-items: center;
+}
+
 .modale-content {
 	overflow: auto;
 	width: 630px;
 	height: 688px;
 	display: flex;
 	flex-direction: column;
-	padding: 20px 20px 50px 20px;
+	padding: 20px 20px 0px 20px;
 	border-radius: 10px;
 	background-color: #FFF;
 }
@@ -513,6 +519,23 @@ footer nav ul {
 	border: none;
 	background-color: white;
 	margin-bottom: 10px;
+}
+
+.modale .back {
+	width: 21px;
+	height: 21px;
+	align-self: flex-end;
+	padding: 0;
+	border: none;
+	background-color: white;
+	margin-bottom: 10px;
+	visibility: collapse;
+}
+
+.modale-navigation {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .modale button img {
@@ -534,7 +557,7 @@ footer nav ul {
 	gap: 28px 8px;
 	border-bottom: 1px solid #B3B3B3;
 	margin-bottom: 37px;
-	padding: 0 60px 94px 60px;
+	padding: 0 60px 50px 60px;
 }
 
 .modale-works img {
@@ -546,13 +569,14 @@ footer nav ul {
 .add-photo {
 	align-self: center;
 	border-radius: 60px;
-	border: 1px solid #1D6154;
+	border: none;
 	height: 35px;
 	background-color: #1D6154;
 	color: #FFF;
 	width: 237px;
 	padding: 11px 0 11px 0;
 	margin-bottom: 30px;
+	order: 2;
 }
 
 .add-photo .span {
@@ -563,6 +587,13 @@ footer nav ul {
 }
 
 /* modal 2 (upload file) hidden by default */
+.modale2 {
+	visibility: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	order: 1;
+}
 
 .upload {
 	display: flex;
@@ -572,10 +603,9 @@ footer nav ul {
 	background-color: #E8F1F6;
 	border-radius: 3px;
 	padding: 20px;
-	visibility: hidden;
+	/*visibility: hidden;*/
 	width: 420px;
 	height: 169px;
-	position: fixed;
 }
 
 .upload-form {
@@ -584,12 +614,11 @@ footer nav ul {
 	background-color: #E8F1F6;
 	border-radius: 3px;
 	padding: 30px 20px 20px 20px;
-	visibility: hidden;
+	/*visibility: hidden;*/
 	width: 420px;
 	height: 169px;
-	position: fixed;
 	background-color: white;
-
+	height: 100%;
 }
 
 .upload-form .upload-form-title {
@@ -599,15 +628,16 @@ footer nav ul {
 }
 
 .upload-form #title {
-	height: 100px;
+	height: 51px;
 	border: none;
 	box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.09);
 	margin-bottom: 21px;
 	font-size: large;
+	padding: 0;
 }
 
 .upload-form select {
-	height: 100px;
+	height: 51px;
 	border: none;
 	box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.09);
 	margin-bottom: 21px;
@@ -634,4 +664,17 @@ footer nav ul {
 	font-weight: 400;
 	font-size: 10px;
 	color: #444444;
+}
+
+.valid-upload {
+	align-self: center;
+	border-radius: 60px;
+	border: none;
+	height: 35px;
+	background-color: #A7A7A7;
+	color: #FFF;
+	width: 237px;
+	padding: 11px 0 11px 0;
+	margin-bottom: 30px;
+	order: 2;
 }

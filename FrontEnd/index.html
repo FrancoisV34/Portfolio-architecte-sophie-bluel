@@ -34,31 +34,50 @@
 			aria-labelledby="modale-title">
 
 			<div class="modale-content">
-				<button class="xmark"><img src="/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/xmark.png"
-						alt="croix pour fermer modale"></button>
-				<span class="modale-title">Galerie photo</span>
-				<div class="upload">
-					<img src="/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/Vector.png"
-						alt="logo upload file">
-					<label for="photoupload">+ Ajouter photo</label>
-					<input type="file" enctype="multipart/form-data" id="photoupload" hidden>
-					<span class="upload-details">jpg, png : 4 mo max</span>
-				</div>
-				<div class="upload-form">
-					<label for="title" class="upload-form-title">Titre</label>
-					<input type="text" id="title">
-					<label for="upload-category" class="upload-form-title">Catégorie</label>
-					<select id="upload-category" aria-placeholder="">
-						<option value="1">Objet</option>
-						<option value="2">Appartement</option>
-						<option value="3">Hôtels & Restaurants</option>
-					</select>
+				<div class="modale-navigation">
+					<button class="back"><img
+							src="/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/Vector.png"
+							alt="logo back modale 1">
+					</button>
+					<button class="xmark"><img
+							src="/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/xmark.png"
+							alt="croix pour fermer modale">
+					</button>
 				</div>
 
-				<div class="modale-works">
-
+				<div class="modale2">
+					<span class="modale-title">Ajout Photo</span>
+					<div class="upload">
+						<img src="/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/Vector-2.png"
+							alt="logo upload file">
+						<label for="photoupload">+ Ajouter photo</label>
+						<input type="file" enctype="multipart/form-data" id="photoupload" hidden>
+						<span class="upload-details">jpg, png : 4 mo max</span>
+					</div>
+					<div class="upload-form">
+						<label for="title" class="upload-form-title">Titre</label>
+						<input type="text" id="title">
+						<label for="upload-category" class="upload-form-title">Catégorie</label>
+						<select id="upload-category" aria-placeholder="">
+							<option value="1">Objet</option>
+							<option value="2">Appartement</option>
+							<option value="3">Hôtels & Restaurants</option>
+						</select>
+					</div>
+					<button class="valid-upload">
+						Valider
+					</button>
 				</div>
-				<button class="add-photo"><span>Ajouter une photo</span></button>
+				<div class="modale1">
+					<span class="modale-title">Galerie photo</span>
+					<div class="modale-works">
+
+					</div>
+					<button class="add-photo">
+						Ajouter une photo
+					</button>
+				</div>
+
 			</div>
 		</div>
 		<section id="introduction">
