@@ -233,16 +233,33 @@ getWorks().then(data => {
                 modale.setAttribute("aria-modal", "true");
 
 
+
+
                 if (data.length > 0) {
                     const modaleWorks = document.querySelector(".modale-works")
                     modaleWorks.innerHTML = "";
 
                     for (let i = 0; i < data.length; i++) {
 
+                        const divWork = document.createElement("div");
+                        divWork.classList.add("work-item");
+
                         const imgWork = document.createElement("img");
                         imgWork.src = data[i].imageUrl
 
-                        modaleWorks.appendChild(imgWork);
+                        const trashImg = document.createElement("img")
+                        trashImg.src = "/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/trash.png"
+                        trashImg.alt = "trash icon"
+
+                        const trashBtn = document.createElement("button")
+                        trashBtn.classList.add("trash-icon");
+
+                        trashBtn.appendChild(trashImg);
+
+                        divWork.appendChild(imgWork);
+                        divWork.appendChild(trashBtn);
+
+                        modaleWorks.appendChild(divWork);
                     }
                 }
             })
