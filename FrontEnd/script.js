@@ -17,6 +17,7 @@ getWorks().then(data => {
             figcaptionWork.innerText = data[i].title;
 
             const globalFig = document.createElement("figure")
+            globalFig.dataset.id = data[i].id;
 
             globalFig.appendChild(imgWork)
             globalFig.appendChild(figcaptionWork)
@@ -24,15 +25,22 @@ getWorks().then(data => {
             sectionWork.appendChild(globalFig);
         }
     }
-    return data;
-}).then(data => {
+})
+async function getCategories() {
+    const response = await fetch("http://localhost:5678/api/categories")
+    const categories = await response.json()
+    return categories;
+}
+
+
+getWorks().then(data => {
     if (data.length > 0) {
         const divFiltres = document.querySelector(".filtres");
 
         //Bouton de "réactualisation" des filtres => apparition de tous les projets
 
         const tousBtn = document.createElement("button")
-        tousBtn.id = "Tous";
+        tousBtn.dataset.categoryId = "Tous";
         tousBtn.innerText = "Tous";
         tousBtn.classList.add("filter-btn")
         tousBtn.addEventListener("click", function () {
@@ -63,282 +71,319 @@ getWorks().then(data => {
                 sectionWork.appendChild(globalFig);
             })
         })
+        getCategories().then(categories => {
+            if (data.length > 0) {
+                const divFiltres = document.querySelector(".filtres");
 
-        // Boutons pour select only "Objets"
+                //Bouton de "réactualisation" des filtres => apparition de tous les projets
 
-        const objetsBtn = document.createElement("button")
-        objetsBtn.id = "Objets";
-        objetsBtn.innerText = "Objets";
-        objetsBtn.classList.add("filter-btn")
-        objetsBtn.addEventListener("click", function () {
-            const buttons = document.querySelectorAll(".filter-btn")
+                const tousBtn = document.createElement("button")
+                tousBtn.dataset.categoryId = "Tous";
+                tousBtn.innerText = "Tous";
+                tousBtn.classList.add("filter-btn")
 
-            buttons.forEach(button => {
-                if (button === this) {
-                    button.classList.add("selected")
-                } else {
-                    button.classList.remove("selected")
-                }
-            })
-            const objWorks = data.filter(data => data.categoryId === 1)
-            const sectionWork = document.querySelector(".gallery")
-            sectionWork.innerHTML = "";
+                divFiltres.appendChild(tousBtn);
 
-            objWorks.forEach(work => {
-                const figure = document.createElement("figure");
+                categories.forEach(category => {
+                    const filterButton = document.createElement("button")
+                    filterButton.classList.add("filter-btn")
+                    filterButton.dataset.categoryId = category.id;
+                    filterButton.innerText = category.name;
 
-                const img = document.createElement("img");
-                img.src = work.imageUrl;
+                    divFiltres.appendChild(filterButton);
+                })
+                const buttons = document.querySelectorAll(".filter-btn")
 
-                const caption = document.createElement("figcaption");
-                caption.innerText = work.title;
-
-                figure.appendChild(img);
-                figure.appendChild(caption);
-                sectionWork.appendChild(figure);
-            })
-        })
-
-        // Bouton pour faire apparaitre only "Appartements"
-
-        const appartBtn = document.createElement("button")
-        appartBtn.id = "Appartements";
-        appartBtn.innerText = "Appartements";
-        appartBtn.classList.add("filter-btn")
-        appartBtn.addEventListener("click", function () {
-            const buttons = document.querySelectorAll(".filter-btn")
-
-            buttons.forEach(button => {
-                if (button === this) {
-                    button.classList.add("selected")
-                } else {
-                    button.classList.remove("selected")
-                }
-            })
-
-            const appartWorks = data.filter(data => data.categoryId === 2)
-            const sectionWork = document.querySelector(".gallery")
-            sectionWork.innerHTML = ""
-
-            appartWorks.forEach(work => {
-                const figure = document.createElement("figure");
-
-                const img = document.createElement("img");
-                img.src = work.imageUrl;
-
-                const caption = document.createElement("figcaption");
-                caption.innerText = work.title;
-
-                figure.appendChild(img);
-                figure.appendChild(caption);
-                sectionWork.appendChild(figure);
-            })
-
-        })
-
-        // Bouton only Hôtels & Restaurants
-
-        const hrBtn = document.createElement("button")
-        hrBtn.id = "Hotels&Restaurants";
-        hrBtn.innerText = "Hôtels & Restaurants";
-        hrBtn.classList.add("filter-btn")
-        hrBtn.addEventListener("click", function () {
-            const buttons = document.querySelectorAll(".filter-btn")
-
-            buttons.forEach(button => {
-                if (button === this) {
-                    button.classList.add("selected")
-                } else {
-                    button.classList.remove("selected")
-                }
-            })
-
-            const hrWorks = data.filter(data => data.categoryId === 3)
-            const sectionWork = document.querySelector(".gallery")
-            sectionWork.innerHTML = ""
-
-            hrWorks.forEach(work => {
-                const figure = document.createElement("figure");
-
-                const img = document.createElement("img");
-                img.src = work.imageUrl;
-
-                const caption = document.createElement("figcaption");
-                caption.innerText = work.title;
-
-                figure.appendChild(img);
-                figure.appendChild(caption);
-                sectionWork.appendChild(figure);
-            })
-
-        })
-
-        divFiltres.appendChild(tousBtn);
-        divFiltres.appendChild(objetsBtn);
-        divFiltres.appendChild(appartBtn);
-        divFiltres.appendChild(hrBtn);
-
-    }
-    //get the token 
-    const token = localStorage.getItem("token")
-    // use if -> when token ok -> change button login into logout
-    if (token) {
-        const logoutBtn = document.querySelector(".login")
-        logoutBtn.innerText = "logout"
-
-        // hide buttons when login
-        const filtres = document.querySelector(".filtres")
-        filtres.innerHTML = ""
-
-        // create p and img (icon) 
-        const modify = document.createElement("button")
-        modify.setAttribute("id", "modify-button")
-        modify.innerText = "Modifier"
-
-        const modifyIcon = document.createElement("img")
-        modifyIcon.setAttribute("alt", "icone modifier")
-        modifyIcon.setAttribute("id", "modify-icon")
-        modifyIcon.setAttribute("src", "/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/Group.png")
-
-        //target section#portfolio 
-        const portfolio = document.querySelector(".portfolio-title")
+                buttons.forEach(button => {
+                    button.addEventListener("click", function () {
+                        buttons.forEach(selectedBtn => {
+                            selectedBtn.classList.toggle("selected", selectedBtn === this);
+                        });
 
 
-        //appear icon into p
+                        const sectionWork = document.querySelector(".gallery")
+                        sectionWork.innerHTML = "";
 
-        modify.appendChild(modifyIcon)
+                        if (this.dataset.categoryId === "Tous") {
 
-        portfolio.appendChild(modify)
+                            data.forEach(work => {
+                                const globalFig = document.createElement("figure")
 
+                                const imgWork = document.createElement("img");
+                                imgWork.src = work.imageUrl
 
-        //now if click on the button -> remove token and reload page
-        logoutBtn.addEventListener("click", function () {
-            localStorage.removeItem("token")
-            window.location.reload()
-        })
-
-        //open modale
-        modify.addEventListener("click", function () {
-            getWorks().then(data => {
-                const modale = document.querySelector(".modale");
-
-                const modaleOne = document.querySelector(".modale1")
-                modaleOne.style.display = "flex";
-
-                const modaleTwo = document.querySelector(".modale2")
-                modaleTwo.style.display = "none";
-
-                modale.style.visibility = "visible";
-                modale.removeAttribute("aria-hidden")
-                modale.setAttribute("aria-modal", "true");
+                                const figcaptionWork = document.createElement("figcaption")
+                                figcaptionWork.innerText = work.title;
 
 
 
+                                globalFig.appendChild(imgWork)
+                                globalFig.appendChild(figcaptionWork)
 
-                if (data.length > 0) {
-                    const modaleWorks = document.querySelector(".modale-works")
-                    modaleWorks.innerHTML = "";
+                                sectionWork.appendChild(globalFig);
+                            });
+                        } else {
 
-                    for (let i = 0; i < data.length; i++) {
+                            const categoryId = parseInt(this.dataset.categoryId);
+                            const filtered = data.filter(work => work.categoryId === categoryId);
 
-                        const divWork = document.createElement("div");
-                        divWork.classList.add("work-item");
+                            filtered.forEach(work => {
+                                const globalFig = document.createElement("figure")
 
-                        const imgWork = document.createElement("img");
-                        imgWork.src = data[i].imageUrl
+                                const imgWork = document.createElement("img");
+                                imgWork.src = work.imageUrl
 
-                        const trashImg = document.createElement("img")
-                        trashImg.src = "/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/trash.png"
-                        trashImg.alt = "trash icon"
+                                const figcaptionWork = document.createElement("figcaption")
+                                figcaptionWork.innerText = work.title;
 
-                        const trashBtn = document.createElement("button")
-                        trashBtn.classList.add("trash-icon");
+                                globalFig.appendChild(imgWork)
+                                globalFig.appendChild(figcaptionWork)
 
-                        trashBtn.appendChild(trashImg);
+                                sectionWork.appendChild(globalFig);
+                            });
+                        }
+                    });
+                });
+            }
+        });
 
-                        divWork.appendChild(imgWork);
-                        divWork.appendChild(trashBtn);
-
-                        modaleWorks.appendChild(divWork);
+        const buttons = document.querySelectorAll(".filter-btn")
+        buttons.forEach(button => {
+            button.addEventListener("click", function () {
+                buttons.forEach(selectedBtn => {
+                    if (selectedBtn === this) {
+                        selectedBtn.classList.add("selected")
+                    } else {
+                        selectedBtn.classList.remove("selected")
                     }
-                }
+                });
+
+                const objWorks = data.filter(work => work.categoryId === parseInt(this.dataset.categoryId));
+                const sectionWork = document.querySelector(".gallery");
+                sectionWork.innerHTML = "";
+
+                objWorks.forEach(work => {
+                    const figure = document.createElement("figure");
+
+                    const img = document.createElement("img");
+                    img.src = work.imageUrl;
+
+                    const caption = document.createElement("figcaption");
+                    caption.innerText = work.title;
+
+                    figure.appendChild(img);
+                    figure.appendChild(caption);
+                    sectionWork.appendChild(figure);
+                })
             })
-
-        })
-
-        //make a function and call function if click on the button ...
-
-        const addPhotoBtn = document.querySelector(".add-photo")
-        addPhotoBtn.addEventListener("click", function () {
-            // hide modale1
-            const modale1 = document.querySelector(".modale1")
-            modale1.style.display = "none";
-
-            //appear modale2
-            const modale2 = document.querySelector(".modale2")
-            modale2.style.visibility = "visible";
-            modale2.style.display = "flex"
-
-            const modaleContent = document.querySelector(".modale-content")
-            modaleContent.appendChild(modale2);
-
-            const backArrow = document.querySelector(".back")
-            backArrow.style.visibility = "visible";
-
-        })
-
-        //close modale with click outside the modale, on the xmark and with escape key
-        let modaleContent = document.querySelector(".modale-content")
-        const modale = document.querySelector(".modale");
-        const xmark = document.querySelector(".xmark")
-
-        const closeModale = function (event) {
-            if (!modaleContent.contains(event.target) || xmark.contains(event.target)) {
-                event.preventDefault();
-                document.activeElement.blur();
-
-                modale.style.visibility = "hidden";
-                modale.setAttribute("aria-hidden", "true");
-                modale.removeAttribute("aria-modal");
-
-                const modale2 = document.querySelector(".modale2")
-                modale2.style.visibility = "hidden";
-
-
-                backArrow.style.visibility = "hidden";
-            }
-        }
-        // back arrow function
-        const backArrow = document.querySelector(".back")
-        const backModaleOne = function (event) {
-            event.preventDefault();
-            document.activeElement.blur();
-
-            const modale1 = document.querySelector(".modale1")
-            modale1.style.display = "flex";
-
-            const modale2 = document.querySelector(".modale2")
-            modale2.style.display = "none";
-
-            modale2.style.visibility = "hidden";
-            backArrow.style.visibility = "hidden";
-        }
-        backArrow.addEventListener("click", backModaleOne)
-        modale.addEventListener("click", closeModale);
-        xmark.addEventListener("click", closeModale);
-        window.addEventListener("keydown", function (event) {
-            if (event.key === "Escape" || event.key === "Esc") {
-                closeModale(event);
-            }
         })
     }
 })
+
+
+
+
+
+// Boutons pour select only "Objets"
+
+
+
+
+
+
+//get the token 
+const token = localStorage.getItem("token")
+// use if -> when token ok -> change button login into logout
+if (token) {
+    const logoutBtn = document.querySelector(".login")
+    logoutBtn.innerText = "logout"
+    console.log("token ok", token)
+    // hide buttons when login
+    const divFiltres = document.querySelector(".filtres");
+    divFiltres.style.display = "none";
+
+    const divGallery = document.querySelector(".gallery");
+    divGallery.style.marginTop = "50px";
+
+    // create p and img (icon) 
+    const modify = document.createElement("button")
+    modify.setAttribute("id", "modify-button")
+    modify.innerText = "Modifier"
+
+    const modifyIcon = document.createElement("img")
+    modifyIcon.setAttribute("alt", "icone modifier")
+    modifyIcon.setAttribute("id", "modify-icon")
+    modifyIcon.setAttribute("src", "/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/Group.png")
+
+    //target section#portfolio 
+    const portfolio = document.querySelector(".portfolio-title")
+
+
+    //appear icon into p
+
+    modify.appendChild(modifyIcon)
+
+    portfolio.appendChild(modify)
+
+
+    //now if click on the button -> remove token and reload page
+    logoutBtn.addEventListener("click", function () {
+        localStorage.removeItem("token")
+        window.location.reload()
+    })
+
+    //open modale
+    modify.addEventListener("click", function () {
+        getWorks().then(data => {
+            const modale = document.querySelector(".modale");
+
+            const modaleOne = document.querySelector(".modale1")
+            modaleOne.style.display = "flex";
+
+            const modaleTwo = document.querySelector(".modale2")
+            modaleTwo.style.display = "none";
+
+            modale.style.visibility = "visible";
+            modale.removeAttribute("aria-hidden")
+            modale.setAttribute("aria-modal", "true");
+
+            console.log(token)
+
+
+            if (data.length > 0) {
+                const modaleWorks = document.querySelector(".modale-works")
+                modaleWorks.innerHTML = "";
+
+                for (let i = 0; i < data.length; i++) {
+
+                    const divWork = document.createElement("div");
+                    divWork.classList.add("work-item");
+
+                    const imgWork = document.createElement("img");
+                    imgWork.src = data[i].imageUrl
+
+                    divWork.dataset.id = data[i].id;
+
+                    const trashImg = document.createElement("img")
+                    trashImg.src = "/Portfolio-architecte-sophie-bluel_fv/FrontEnd/assets/icons/trash.png"
+                    trashImg.alt = "trash icon"
+
+                    const trashBtn = document.createElement("button")
+                    trashBtn.classList.add("trash-icon");
+
+                    trashBtn.appendChild(trashImg);
+
+                    divWork.appendChild(imgWork);
+                    divWork.appendChild(trashBtn);
+
+                    modaleWorks.appendChild(divWork);
+
+                    trashBtn.addEventListener("click", async function () {
+                        try {
+                            const response = await fetch(`http://localhost:5678/api/works/${divWork.dataset.id}`, {
+                                method: "DELETE",
+                                headers: {
+                                    "Authorization": `Bearer ${token}`,
+                                    "Content-type": "application/json"
+                                }
+                            });
+                            if (response.ok) {
+                                divWork.remove();
+
+                                const deletedFigure = document.querySelector(`figure[data-id="${divWork.dataset.id}"]`);
+                                deletedFigure.remove();
+                                console.log("Project deleted");
+                            } else {
+                                console.log("delete failed");
+                            }
+                        } catch (error) {
+                            console.log("Error deleting work:", error);
+                        }
+                    });
+                }
+            }
+        });
+
+    })
+
+    //make a function and call function if click on the button ...
+
+    const addPhotoBtn = document.querySelector(".add-photo")
+    addPhotoBtn.addEventListener("click", function () {
+        // hide modale1
+        const modale1 = document.querySelector(".modale1")
+        modale1.style.display = "none";
+
+        //appear modale2
+        const modale2 = document.querySelector(".modale2")
+        modale2.style.visibility = "visible";
+        modale2.style.display = "flex"
+
+        const modaleContent = document.querySelector(".modale-content")
+        modaleContent.appendChild(modale2);
+
+        const backArrow = document.querySelector(".back")
+        backArrow.style.visibility = "visible";
+
+    })
+
+    //close modale with click outside the modale, on the xmark and with escape key
+    let modaleContent = document.querySelector(".modale-content")
+    const modale = document.querySelector(".modale");
+    const xmark = document.querySelector(".xmark")
+
+    const closeModale = function (event) {
+        if (!modaleContent.contains(event.target) || xmark.contains(event.target)) {
+            event.preventDefault();
+            document.activeElement.blur();
+
+            modale.style.visibility = "hidden";
+            modale.setAttribute("aria-hidden", "true");
+            modale.removeAttribute("aria-modal");
+
+            const modale2 = document.querySelector(".modale2")
+            modale2.style.visibility = "hidden";
+
+
+            backArrow.style.visibility = "hidden";
+        }
+    }
+    // back arrow function
+    const backArrow = document.querySelector(".back")
+    const backModaleOne = function (event) {
+        event.preventDefault();
+        document.activeElement.blur();
+
+        const modale1 = document.querySelector(".modale1")
+        modale1.style.display = "flex";
+
+        const modale2 = document.querySelector(".modale2")
+        modale2.style.display = "none";
+
+        modale2.style.visibility = "hidden";
+        backArrow.style.visibility = "hidden";
+    }
+    backArrow.addEventListener("click", backModaleOne)
+    modale.addEventListener("click", closeModale);
+    xmark.addEventListener("click", closeModale);
+    window.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" || event.key === "Esc") {
+            closeModale(event);
+        }
+    })
+}
+
+const projectBtn = document.querySelector(".projet")
+projectBtn.addEventListener("click", function () {
+    window.location.href = "http://127.0.0.1:5500/Portfolio-architecte-sophie-bluel_fv/FrontEnd/index.html"
+});
 
 const logBtn = document.querySelector(".login")
 logBtn.addEventListener("click", function () {
     const main = document.querySelector("main");
     main.innerHTML = "";
 
+    logBtn.style.fontWeight = "600";
     //Création titre Log In h2 dans page login
     const pageLogLogin = document.createElement("h2");
     pageLogLogin.classList.add("h2-login-page")
@@ -351,7 +396,7 @@ logBtn.addEventListener("click", function () {
 
     //Création label et input email.
     const labelEmail = document.createElement("label")
-    labelEmail.setAttribute("for", "email");
+    labelEmail.setAttribute("for", "email-login");
     labelEmail.classList.add("labelemail")
     labelEmail.innerText = "E-mail"
 
