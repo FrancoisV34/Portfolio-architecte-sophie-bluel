@@ -504,7 +504,6 @@ footer nav ul {
 .modale-content {
 	overflow: auto;
 	width: 630px;
-	height: 688px;
 	display: flex;
 	flex-direction: column;
 	padding: 20px 20px 0px 20px;
@@ -621,10 +620,25 @@ footer nav ul {
 	align-items: center;
 	background-color: #E8F1F6;
 	border-radius: 3px;
-	padding: 20px;
+	padding: 0 20px 0 20px;
 	/*visibility: hidden;*/
 	width: 420px;
 	height: 169px;
+}
+
+.upload span {
+	margin-bottom: 20px;
+}
+
+.upload img {
+	margin-top: 20px;
+}
+
+.upload .uploaded-image {
+	height: 100%;
+	width: 31%;
+	margin: 0;
+	z-index: 10000;
 }
 
 .upload-form {

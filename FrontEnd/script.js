@@ -328,12 +328,34 @@ if (token) {
         const fileInput = document.getElementById("photoupload");
         const titleInput = document.getElementById("title");
         const categorySelect = document.getElementById("upload-category");
+        const logoUploadImg = document.getElementById("logo-upload-img");
+        const spanUploadDetails = document.querySelector(".upload-details");
+        const labelPhotoupload = document.getElementById("label-photoupload");
+        const uploadDiv = document.querySelector(".upload");
 
         function checkFormComplete() {
+
             const file = fileInput.files[0];
             const title = titleInput.value.trim();
             const category = categorySelect.value;
             const validationBtn = document.querySelector(".valid-upload");
+
+            if (file) {
+                const oldUploadedImage = document.querySelector(".uploaded-image");
+                if (oldUploadedImage) {
+                    oldUploadedImage.remove();
+                }
+                const uploadedImage = document.createElement("img");
+                uploadedImage.src = URL.createObjectURL(file);
+                uploadedImage.alt = "Aperçu de l'image téléchargée";
+                uploadedImage.classList.add("uploaded-image");
+                logoUploadImg.hidden = true;
+                spanUploadDetails.hidden = true;
+                labelPhotoupload.hidden = true;
+
+                uploadDiv.appendChild(uploadedImage);
+            }
+
 
             if (file && title !== "" && category !== "") {
 
@@ -341,7 +363,6 @@ if (token) {
                 validationBtn.style.color = "#fff";
 
                 console.log("Formulaire complet");
-                return;
             }
         }
         fileInput.addEventListener("change", checkFormComplete);
