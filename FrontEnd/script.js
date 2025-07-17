@@ -325,6 +325,28 @@ if (token) {
         const backArrow = document.querySelector(".back")
         backArrow.style.visibility = "visible";
 
+        const fileInput = document.getElementById("photoupload");
+        const titleInput = document.getElementById("title");
+        const categorySelect = document.getElementById("upload-category");
+
+        function checkFormComplete() {
+            const file = fileInput.files[0];
+            const title = titleInput.value.trim();
+            const category = categorySelect.value;
+            const validationBtn = document.querySelector(".valid-upload");
+
+            if (file && title !== "" && category !== "") {
+
+                validationBtn.style.backgroundColor = "#1D6154";
+                validationBtn.style.color = "#fff";
+
+                console.log("Formulaire complet");
+                return;
+            }
+        }
+        fileInput.addEventListener("change", checkFormComplete);
+        titleInput.addEventListener("input", checkFormComplete);
+        categorySelect.addEventListener("change", checkFormComplete);
     })
 
     //close modale with click outside the modale, on the xmark and with escape key
@@ -372,6 +394,77 @@ if (token) {
         }
     })
 }
+
+function displayWorks(works) {
+    const sectionWork = document.querySelector(".gallery");
+    sectionWork.innerHTML = "";
+
+    works.forEach(work => {
+        const imgWork = document.createElement("img");
+        imgWork.src = work.imageUrl;
+
+        const figcaptionWork = document.createElement("figcaption");
+        figcaptionWork.innerText = work.title;
+
+        const globalFig = document.createElement("figure");
+        globalFig.appendChild(imgWork);
+        globalFig.appendChild(figcaptionWork);
+
+        sectionWork.appendChild(globalFig);
+    });
+}
+
+const uploadForm = document.querySelector(".upload-file-form")
+uploadForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    console.log("form déclenché");
+    const fileInput = document.getElementById("photoupload");
+    const titleInput = document.getElementById("title");
+    const categorySelect = document.getElementById("upload-category");
+
+    const file = fileInput.files[0];
+    const title = titleInput.value;
+    const category = categorySelect.value;
+
+    if (!file || !title || !category) {
+        alert("Veuillez remplir tous les champs.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("title", title);
+    formData.append("category", category);
+
+    try {
+        const response = await fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: formData
+        });
+
+        if (response.ok) {
+            const newWork = await response.json();
+            // ici mettre a jour l'affichage direct dans .gallery
+
+            // Recharge tous les works après ajout
+            const updatedWorks = await getWorks();
+            displayWorks(updatedWorks);
+
+            //  + aperçu après chargement image et avant submit
+
+            console.log("Nouveau projet ajouté :", newWork);
+        } else {
+            const errorResponse = await response.json();
+            console.error("Erreur lors de l'ajout du projet :", errorResponse);
+        }
+    } catch (error) {
+        console.error("Erreur de réseau :", error);
+    }
+});
 
 const projectBtn = document.querySelector(".projet")
 projectBtn.addEventListener("click", function () {
