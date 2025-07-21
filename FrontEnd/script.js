@@ -141,6 +141,7 @@ getWorks().then(data => {
 
                                 sectionWork.appendChild(globalFig);
                             });
+
                         }
                     });
                 });
@@ -180,8 +181,28 @@ getWorks().then(data => {
     }
 })
 
+const selectCategories = document.getElementById("upload-category");
+getCategories().then(categories => {
+    try {
+        const defaultOption = document.createElement("option");
+        defaultOption.innerText = "";
+        defaultOption.value = "";
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
 
+        selectCategories.appendChild(defaultOption);
 
+        categories.forEach(category => {
+            const option = document.createElement("option");
+            option.value = category.id;
+            option.innerText = category.name;
+            selectCategories.appendChild(option);
+
+        });
+    } catch (error) {
+        console.error("Error fetching categories:", error);
+    }
+});
 
 
 // Boutons pour select only "Objets"
