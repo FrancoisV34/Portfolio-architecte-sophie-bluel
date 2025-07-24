@@ -216,9 +216,11 @@ getCategories().then(categories => {
 const token = localStorage.getItem("token")
 // use if -> when token ok -> change button login into logout
 if (token) {
+
+    showEditionMode();
+
     const logoutBtn = document.querySelector(".login")
     logoutBtn.innerText = "logout"
-    console.log("token ok", token)
     // hide buttons when login
     const divFiltres = document.querySelector(".filtres");
     divFiltres.style.display = "none";
@@ -247,6 +249,7 @@ if (token) {
     portfolio.appendChild(modify)
 
 
+
     //now if click on the button -> remove token and reload page
     logoutBtn.addEventListener("click", function () {
         localStorage.removeItem("token")
@@ -255,6 +258,15 @@ if (token) {
 
     //open modale
     modify.addEventListener("click", function () {
+        openModale();
+    })
+
+    const blackBarButton = document.querySelector(".open-edition-mode")
+    blackBarButton.addEventListener("click", function () {
+        openModale();
+    })
+
+    function openModale() {
         getWorks().then(data => {
             const modale = document.querySelector(".modale");
 
@@ -268,7 +280,6 @@ if (token) {
             modale.removeAttribute("aria-hidden")
             modale.setAttribute("aria-modal", "true");
 
-            console.log(token)
 
 
             if (data.length > 0) {
@@ -313,19 +324,18 @@ if (token) {
 
                                 const deletedFigure = document.querySelector(`figure[data-id="${divWork.dataset.id}"]`);
                                 deletedFigure.remove();
-                                console.log("Project deleted");
                             } else {
-                                console.log("delete failed");
+                                console.error("Erreur lors de la suppression du projet");
                             }
                         } catch (error) {
-                            console.log("Error deleting work:", error);
+                            console.error("Erreur de réseau :", error);
                         }
                     });
                 }
             }
         });
 
-    })
+    }
 
     //make a function and call function if click on the button ...
 
@@ -382,8 +392,6 @@ if (token) {
 
                 validationBtn.style.backgroundColor = "#1D6154";
                 validationBtn.style.color = "#fff";
-
-                console.log("Formulaire complet");
             }
         }
         fileInput.addEventListener("change", checkFormComplete);
@@ -460,7 +468,6 @@ const uploadForm = document.querySelector(".upload-file-form")
 uploadForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    console.log("form déclenché");
     const fileInput = document.getElementById("photoupload");
     const titleInput = document.getElementById("title");
     const categorySelect = document.getElementById("upload-category");
@@ -496,9 +503,6 @@ uploadForm.addEventListener("submit", async function (event) {
             const updatedWorks = await getWorks();
             displayWorks(updatedWorks);
 
-            //  + aperçu après chargement image et avant submit
-
-            console.log("Nouveau projet ajouté :", newWork);
         } else {
             const errorResponse = await response.json();
             console.error("Erreur lors de l'ajout du projet :", errorResponse);
@@ -510,8 +514,17 @@ uploadForm.addEventListener("submit", async function (event) {
 
 const projectBtn = document.querySelector(".projet")
 projectBtn.addEventListener("click", function () {
-    window.location.href = "http://127.0.0.1:5500/Portfolio-architecte-sophie-bluel_fv/FrontEnd/index.html"
+    window.location.href = "/Portfolio-architecte-sophie-bluel_fv/FrontEnd/index.html"
 });
+
+// lien du top menu fonctionnel (normalement ok j'ai enlevé les http:// etc) , enlever console.log (ok, dans le script.js, j'ai pas touché aux autres fichier js), en edition, sur la maquette barre noire a mettre en place, quand fait adresse mail sur page OC et envoyer par mail juste un message comme quoi le code est ok//
+function showEditionMode() {
+    const blackBar = document.querySelector(".black-bar-edition");
+    blackBar.style.display = "flex";
+
+    const header = document.querySelector("header");
+    header.style.marginTop = "101px";
+}
 
 const logBtn = document.querySelector(".login")
 logBtn.addEventListener("click", function () {
@@ -626,7 +639,7 @@ async function getUsers() {
             localStorage.setItem("token", dataUsers.token);
 
             // we want to go back to the "accueil" page
-            window.location.href = "http://127.0.0.1:5500/Portfolio-architecte-sophie-bluel_fv/FrontEnd/index.html"
+            window.location.href = "/Portfolio-architecte-sophie-bluel_fv/FrontEnd/index.html"
 
         } catch (error) {
         }
